@@ -22,9 +22,9 @@ import java.util.Scanner;
 public class LifeUniverseEverything2 {
     public static void main(String[] args){
         boolean result = true;
+        Scanner scan = new Scanner(System.in);
         while (result){
             try {
-                Scanner scan = new Scanner(System.in);
                 String read = scan.next();
                 if("42".equals(read)){
                     result=false;
@@ -34,7 +34,6 @@ public class LifeUniverseEverything2 {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
     }
 
