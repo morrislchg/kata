@@ -9,8 +9,9 @@
  * 作者姓名           修改时间           版本号              描述
  */
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -26,5 +27,21 @@ public class LiFeUniverseTest {
         int two = 2;
         int test = 2;
         Assert.assertTrue(two==test);
+    }
+    @Test
+    public void testPrime(){
+        PrimeGenerator primeGenerator = new PrimeGenerator();
+        long start = System.currentTimeMillis();
+        primeGenerator.getPrime(1,100000);
+        long end = System.currentTimeMillis();
+        System.out.println("======"+(end-start));
+    }
+
+    public static void main(String[] args) {
+        PrimeGenerator primeGenerator = new PrimeGenerator();
+        long start = System.currentTimeMillis();
+        primeGenerator.getPrime(1,100000);
+        long end = System.currentTimeMillis();
+        System.out.println("======"+(end-start));
     }
 }
