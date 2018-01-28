@@ -42,78 +42,79 @@ import java.util.concurrent.Executors;
  */
 public class PrimeGenerator {
     public static void main(String[] args) {
-        long st = System.currentTimeMillis();
         java.io.BufferedReader r = new java.io.BufferedReader (new java.io.InputStreamReader (System.in));
         boolean flag = true;
         int num = 0;
         String inarray[] = null;
-        long ed1 = System.currentTimeMillis();
-        System.out.println("stp1"+(ed1-st));
         while (flag){
             try {
                 if(num == 0){
                     num = Integer.valueOf(r.readLine());
+                    if(num>10||num<1){
+                        throw new RuntimeException("invalidate input");
+                    }
                     inarray = new String[num];
                 }else{
                     int length = inarray.length;
+                    if(length-num<0){
+                        throw new RuntimeException("invalid input");
+                    }
                     inarray[length-num] = r.readLine();
                     num--;
                 }
                 if(num==0){
                     System.out.println(inarray.length);
                     int m = 0;
-                    long ed2 = System.currentTimeMillis();
-                    System.out.println("stp2"+(ed2-ed1));
                     for(String str:inarray){
                         if(m!=0){
                             System.out.println("");
                         }
+                        if(str.indexOf(" ")==-1){
+                            throw new RuntimeException("invalid input");
+                        }
                         String[] primearray = str.split(" ");
+                        if(primearray.length!=2){
+                            throw new RuntimeException("invalid input");
+                        }
                         PrimeGenerator primeGenerator = new PrimeGenerator();
-                        primeGenerator.getPrime(Long.valueOf(primearray[0]),Long.valueOf(primearray[1]));
+                        long start = Long.valueOf(primearray[0]);
+                        long end = Long.valueOf(Long.valueOf(primearray[1]));
+                        if(start<1||start>end||end-start>100000||start>1000000000||end>1000000000){
+                            throw new RuntimeException("invalid input");
+                        }
+                        primeGenerator.getPrime(start,end);
                         m++;
                     }
-                    long ed3 = System.currentTimeMillis();
-                    System.out.println("stp3"+(ed3-ed2));
                     flag = false;
                 }
-                long ed4 = System.currentTimeMillis();
-                System.out.println("stp4"+(ed4-ed1));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
     public void getPrime(long start,long end){
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
-        try{
             for(long i=start;i<=end;i++){
-                final long index = i;
-                fixedThreadPool.execute(new Runnable() {
-                    public void run() {
-                        if(isPrime(index))
-                            System.out.println(index);
-                    }
-                });
+                        if(isPrime(i))
+                            System.out.println(i);
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            fixedThreadPool.shutdown();
-        }
-
+    }
+    public long getEnd(long re){
+        double result = Math.sqrt(re);
+        long lre = (long)result;
+        return lre;
     }
     public boolean isPrime(long re){
-        boolean result = true;
-        if(re<2){
-            return false;
-        }
-        for(int i=2;i<re;i++){
+        long end = getEnd(re);
+        long i;
+        for(i=2;i<=end;i++){
             if(re%i==0){
-                result = false;
                 break;
             }
         }
-        return result;
+        if(i>end){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

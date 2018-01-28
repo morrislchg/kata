@@ -39,9 +39,6 @@ public class LiFeUniverseTest {
 
     public static void main(String[] args) {
         PrimeGenerator primeGenerator = new PrimeGenerator();
-        long start = System.currentTimeMillis();
-        primeGenerator.getPrime(1,100000);
-        long end = System.currentTimeMillis();
-        System.out.println("======"+(end-start));
+        System.out.println(primeGenerator.isPrime(45));;
     }
 }
